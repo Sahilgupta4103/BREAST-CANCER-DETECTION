@@ -1,6 +1,6 @@
 # BREAST-CANCER-DETECTION
 
-<!-- About Dataset -->
+About Dataset
 
 Attribute Information:
 
