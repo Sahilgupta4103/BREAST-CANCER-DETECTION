@@ -1,83 +1,83 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[71]:
-
+# In[33]:
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pickle
+import warnings
 
-
-# In[72]:
+# In[34]:
 
 
 df=pd.read_csv('data.csv')
 
 
-# In[73]:
+# In[35]:
 
 
 df.head()
 
 
-# In[74]:
+# In[36]:
 
 
 # M:-harmfull
 # b:-Non-harmfull
 
 
-# In[75]:
+# In[37]:
 
 
 df.tail()
 
 
-# In[76]:
+# In[38]:
 
 
 df.isnull().sum()
 
 
-# In[77]:
+# In[39]:
 
 
 del df['Unnamed: 32']
 
 
-# In[78]:
+# In[40]:
 
 
 df.dtypes.count()
 
 
-# In[79]:
+# In[41]:
 
 
 df.shape
 
 
-# In[80]:
+# In[42]:
 
 
 df['diagnosis'].value_counts()
 
 
-# In[81]:
+# In[43]:
 
 
 sns.countplot(df['diagnosis'], label="count")
 
 
-# In[82]:
+# In[44]:
 
 
 df.dtypes
 
 
-# In[83]:
+# In[45]:
 
 
 from sklearn.preprocessing import LabelEncoder
@@ -85,44 +85,44 @@ labelencoder_y=LabelEncoder()
 df.iloc[:,1]=labelencoder_y.fit_transform(df.iloc[:,1].values)
 
 
-# In[84]:
+# In[46]:
 
 
 sns.pairplot(df.iloc[:,1:6])
 
 
-# In[85]:
+# In[47]:
 
 
 sns.pairplot(df.iloc[:,1:6], hue = 'diagnosis')
 
 
-# In[86]:
+# In[48]:
 
 
 df.head()
 
 
-# In[87]:
+# In[49]:
 
 
 df.iloc[:,1:32].corr()
 
 
-# In[88]:
+# In[50]:
 
 
 sns.heatmap(df.iloc[:,1:31].corr())
 
 
-# In[89]:
+# In[51]:
 
 
 plt.figure(figsize=(10,10))
 sns.heatmap(df.iloc[:,1:12].corr(), annot=True, fmt='0.0%')
 
 
-# In[90]:
+# In[52]:
 
 
 # X-> independent variable (features that can detect the cancer)
@@ -131,7 +131,7 @@ X=df.iloc[:,2:31].values
 Y=df.iloc[:,1].values
 
 
-# In[91]:
+# In[53]:
 
 
 # 75% train and 25% test split
@@ -139,7 +139,7 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train,Y_test=train_test_split(X,Y, test_size=0.25 , random_state=0)
 
 
-# In[92]:
+# In[54]:
 
 
 from sklearn.preprocessing import StandardScaler
@@ -148,7 +148,7 @@ X_train=sc.fit_transform(X_train)
 X_test=sc.fit_transform(X_test)
 
 
-# In[104]:
+# In[55]:
 
 
 def models(X_train, Y_train):
@@ -171,14 +171,14 @@ def models(X_train, Y_train):
     return log, tree ,forest
 
 
-# In[106]:
+# In[56]:
 
 
 # Trainig model score
 model=models(X_train ,Y_train)
 
 
-# In[136]:
+# In[57]:
 
 
 #CONFUSION METRIX:-
@@ -190,7 +190,7 @@ model=models(X_train ,Y_train)
 # Random forest model have best accuracy in Test data
 
 
-# In[127]:
+# In[58]:
 
 
 # Test model accuracy on confusion matrix
@@ -209,7 +209,7 @@ for i in range(len(model)):
     print()
 
 
-# In[137]:
+# In[59]:
 
 
 from sklearn.metrics import classification_report
@@ -229,7 +229,7 @@ print(classification_report(Y_test,model[2].predict(X_test)))
 print(accuracy_score(Y_test,model[2].predict(X_test)))
 
 
-# In[142]:
+# In[60]:
 
 
 # print the prediction of random forest classifier model
@@ -237,4 +237,10 @@ pred = model[2].predict(X_test)
 print(pred)
 print()
 print(Y_test)
+
+
+# In[64]:
+
+
+pickle.dump(model[2], open('breastcancerdetection.pkl','wb'))
 
