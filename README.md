@@ -1,7 +1,5 @@
 # BREAST-CANCER-DETECTION
 
-<<<<<<< HEAD
-=======
 About Dataset
 
 Attribute Information:
