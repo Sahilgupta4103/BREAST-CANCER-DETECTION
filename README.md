@@ -45,4 +45,4 @@ Missing attribute values: 1(Unnamed : 32)
 
 Class distribution: 357 benign, 212 malignant
 
->>>>>>> 8221acd7e58e9191c7e9f553755bb2d792cd892b
+
